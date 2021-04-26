@@ -128,6 +128,15 @@ public class ReadQuestions {
 //        }
 //        System.out.println(sb.toString());
 
+        String[] ques = question.split("\\r\\n");
+        System.out.println(ques.length);
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 0; i < ques.length; i++) {
+//            System.out.println(ques[i]);
+//            sb.append(ques[i]).append("\n");
+//        }
+//        System.out.println(sb.toString());
+
 //        System.out.println( question.contains("\r\n") ); //false
 //
 //        for(Character ch: question.toCharArray()){
