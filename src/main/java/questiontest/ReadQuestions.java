@@ -20,9 +20,6 @@ public class ReadQuestions {
             while ((line = br.readLine())  != null) {
 
                 String[] parts= line.split("', '");
-//                for(int i=0; i<5; i++){
-//                    System.out.println(parts[i]);
-//                }
 
                 String question= parts[0].substring(1);
                 String ansCorrect= "";
@@ -35,7 +32,23 @@ public class ReadQuestions {
                 }
                 Question qu= new Question(question, parts[1], parts[2], parts[3],
                         parts[4].substring(0, parts[4].length()-1), ansCorrect);
-                System.out.println(qu);
+
+                // '-es verzió, #25-nél pl nem jó
+//                String[] parts= line.split(", ");
+//
+//                String question= parts[0];
+//                String ansCorrect= "";
+//                for(int i=1; i<5; i++){
+//
+//                    if(parts[i].startsWith("'@")){
+//                        parts[i]= "'"+parts[i].substring(2);
+//                        ansCorrect= parts[i];
+//                    }
+//                }
+//                Question qu= new Question(question, parts[1], parts[2], parts[3],
+//                        parts[4], ansCorrect);
+
+//                System.out.println(qu);
 
 
 
