@@ -9,29 +9,29 @@ import java.util.Scanner;
 
 public class ReadQuestions {
 
-    private List<Question> questionList= new ArrayList<>();
+    private List<Question> questionList = new ArrayList<>();
 
-    private static final int START_INDEX= 24;
+    private static final int START_INDEX = 0;
 
-    public void readToList(){
+    public void readToList() {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(ReadQuestions.class.getResourceAsStream("/kérdésekEL.txt")))) {
             // kell a '/' elé
             String line;
-            while ((line = br.readLine())  != null) {
+            while ((line = br.readLine()) != null) {
 
-                String[] parts= line.split("', '");
+                String[] parts = line.split("', '");
 
-                String question= parts[0].substring(1);
-                String ansCorrect= "";
-                for(int i=1; i<5; i++){
+                String question = parts[0].substring(1);
+                String ansCorrect = "";
+                for (int i = 1; i < 5; i++) {
 
-                    if(parts[i].startsWith("@")){
-                        parts[i]= parts[i].substring(1);
-                        ansCorrect= parts[i];
+                    if (parts[i].startsWith("@")) {
+                        parts[i] = parts[i].substring(1);
+                        ansCorrect = parts[i];
                     }
                 }
-                Question qu= new Question(question, parts[1], parts[2], parts[3],
-                        parts[4].substring(0, parts[4].length()-1), ansCorrect);
+                Question qu = new Question(question, parts[1], parts[2], parts[3],
+                        parts[4].substring(0, parts[4].length() - 1), ansCorrect);
 
                 // '-es verzió, #25-nél pl nem jó
 //                String[] parts= line.split(", ");
@@ -51,16 +51,17 @@ public class ReadQuestions {
 //                System.out.println(qu);
 
 
-
                 questionList.add(qu);
 
             }
-            System.out.println(questionList.size());
+            System.out.println("kérdések száma: "+ questionList.size());
+
         } catch (IOException ioe) {
             throw new IllegalStateException("Can not read file", ioe);
         }
     }
-    public void writeQuestion(int count){
+
+    public void writeQuestion(int count) {
 //        for(int i=0; i<db; i++){
 //
 //            Question actual= questionList.get(i);
@@ -78,19 +79,19 @@ public class ReadQuestions {
 //            }
 //
 //        }
-        Scanner sc= new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 //        int count= 0;
-        String answ= "";
-        boolean quit= false;
-        while(!quit){
+        String answ = "";
+        boolean quit = false;
+        while (!quit && count!= questionList.size()) {
             writeNextQuestion(sc, count);
 
             System.out.println("Tovább, vagy kilép (Q) ?");
-            answ= sc.nextLine();
+            answ = sc.nextLine();
 //            sc.nextLine();
 //            System.out.println("mit "+ answ.toUpperCase());
-            if(answ.toUpperCase().equals("Q") ){
-                quit= true;
+            if (answ.toUpperCase().equals("Q")) {
+                quit = true;
 //                System.out.println("kilép\n");
             }
             count++;
@@ -98,10 +99,10 @@ public class ReadQuestions {
     }
 
     private void writeNextQuestion(Scanner sc, int count) {
-        Question actual= questionList.get(count);
-        System.out.println(actual);
+        Question actual = questionList.get(count);
+//        System.out.println(actual);
 
-        String question= actual.getQuestion();
+        String question = actual.getQuestion();
 //        System.out.println(question);
 //        System.out.print(question);
 
@@ -128,8 +129,26 @@ public class ReadQuestions {
 //        }
 //        System.out.println(sb.toString());
 
-        String[] ques = question.split("\\r\\n");
-        System.out.println(ques.length);
+//        String[] ques = question.split("\\r\\n");
+//        System.out.println(ques.length);
+//
+//        System.out.println("van-e per per " + question.contains("\\"));
+//
+//        question= question.replace("\\\\", "\\");
+//
+//        System.out.println("csere után van-e per per " + question.contains("\\"));
+//
+//        question= question.replace("'\\'", "'\'");
+//
+//        System.out.println("most van-e per per " + question.contains("\\"));
+//
+//        question= question.replace("\r\n", ";;sorto;;");  //nem
+
+//        question= question.replace("\\r\\n", ";sortör;"); //ok
+//        question= question.replace(";;sorto;;", "\n"); //a kettő együtt ok
+
+        question= question.replace("\\r\\n", "\n");  //ez!
+
 //        StringBuilder sb = new StringBuilder();
 //        for (int i = 0; i < ques.length; i++) {
 //            System.out.println(ques[i]);
@@ -154,7 +173,7 @@ public class ReadQuestions {
     }
 
     public static void main(String[] args) {
-        ReadQuestions rq= new ReadQuestions();
+        ReadQuestions rq = new ReadQuestions();
         rq.readToList();
         rq.writeQuestion(START_INDEX);
 
